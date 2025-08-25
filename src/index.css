@@ -1,0 +1,409 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  /* Garantir que o body tenha fundo preto */
+  body {
+    background-color: black;
+  }
+
+  :root {
+    /* Kick TV Dark Theme Design System */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 6%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 6%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Kick TV Vibrant Green */
+    --primary: 142 76% 36%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 240 6% 12%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 6% 12%;
+    --muted-foreground: 240 5% 64%;
+
+    --accent: 142 76% 36%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 6% 12%;
+    --input: 240 6% 12%;
+    --ring: 142 76% 36%;
+
+    --radius: 0.75rem;
+
+    /* Kick TV Specific Design Tokens */
+    --kick-green: 142 76% 36%;
+    --kick-green-dark: 142 76% 30%;
+    --kick-green-light: 142 76% 42%;
+    --kick-dark: 240 10% 6%;
+    --kick-darker: 0 0% 0%;
+    --kick-gray: 240 5% 64%;
+    --kick-light: 0 0% 98%;
+
+    /* Gradients */
+    --gradient-kick: linear-gradient(135deg, hsl(var(--kick-green)), hsl(var(--kick-green-light)));
+    --gradient-dark: linear-gradient(135deg, hsl(var(--kick-darker)), hsl(var(--kick-dark)));
+
+    /* Shadows */
+    --shadow-kick: 0 10px 30px -10px hsl(var(--kick-green) / 0.3);
+    --shadow-glow: 0 0 40px hsl(var(--kick-green) / 0.2);
+
+    /* Animations */
+    --transition-kick: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 6%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 6%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 142 76% 36%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 240 6% 12%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 6% 12%;
+    --muted-foreground: 240 5% 64%;
+    --accent: 142 76% 36%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 6% 12%;
+    --input: 240 6% 12%;
+    --ring: 142 76% 36%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Fix 2: Travar scroll do body quando modal estiver aberto */
+  body.modal-open {
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  /* Kick TV specific component utilities */
+  .card-selected {
+    @apply border-kick-green bg-gradient-to-br from-kick-green/10 to-transparent;
+    box-shadow: 0 0 30px hsl(var(--kick-green) / 0.3), 0 20px 40px -10px hsl(var(--kick-green) / 0.2);
+  }
+
+  .card-hover {
+    @apply hover:shadow-2xl hover:shadow-kick-green/20 hover:border-kick-green/30;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glow-green {
+    box-shadow: 0 0 20px hsl(var(--kick-green) / 0.4);
+  }
+
+  .glow-green-intense {
+    box-shadow: 0 0 40px hsl(var(--kick-green) / 0.6), inset 0 0 20px hsl(var(--kick-green) / 0.1);
+  }
+
+  .border-gradient-animated {
+    position: relative;
+    background: linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
+                linear-gradient(45deg,
+                  hsl(var(--kick-green)),
+                  hsl(var(--kick-green-light)),
+                  hsl(var(--kick-green)),
+                  hsl(var(--kick-green-light))
+                ) border-box;
+    border: 2px solid transparent;
+    animation: gradient-rotate 3s linear infinite;
+  }
+
+  @keyframes gradient-rotate {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Gradientes radiais para fundo animado */
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+
+  /* Mobile-first responsive utilities */
+  .mobile-optimized {
+    @apply text-sm sm:text-base;
+  }
+
+  .mobile-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  .mobile-margin {
+    @apply my-6 sm:my-8 lg:my-12;
+  }
+
+  /* Improved touch targets for mobile */
+  .touch-friendly {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Better text readability on mobile */
+  .mobile-text {
+    @apply leading-relaxed tracking-wide;
+  }
+
+  /* Efeito Glow Premium - Múltiplas Sombras */
+  .mockup-premium-glow {
+    /* Borda interna quase invisível */
+    border: 1px solid rgba(52, 211, 153, 0.2);
+
+    /* A MÁGICA: MÚLTIPLAS SOMBRAS EM CAMADAS */
+    box-shadow:
+      /* Sombra interna para dar profundidade */
+      inset 0 0 15px rgba(52, 211, 153, 0.1),
+
+      /* Glow principal - mais próximo e mais forte */
+      0 0 10px rgba(52, 211, 153, 0.4),
+
+      /* Glow secundário - mais espalhado e suave */
+      0 0 25px rgba(52, 211, 153, 0.2),
+
+      /* Glow terciário - o mais espalhado, cria a "aura" */
+      0 0 50px rgba(52, 211, 153, 0.1);
+
+    transition: all 0.3s ease-in-out;
+  }
+
+  .mockup-premium-glow:hover {
+    /* Intensifica o efeito no hover */
+    box-shadow:
+      inset 0 0 20px rgba(52, 211, 153, 0.2),
+      0 0 15px rgba(52, 211, 153, 0.6),
+      0 0 35px rgba(52, 211, 153, 0.4),
+      0 0 60px rgba(52, 211, 153, 0.2);
+    transform: scale(1.02);
+  }
+
+  /* Fundo de Vidro Embaçado Animado - Nebulosa MELHORADA */
+  .background-nebula-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -10; /* Força para o fundo de tudo */
+    pointer-events: none;
+    background: transparent; /* Garante fundo transparente */
+  }
+
+  /* Estilo base para cada "bolha" de luz - SEMPRE ATIVO */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.35; /* Igual ao hover - sempre visível */
+    filter: blur(140px); /* Igual ao hover para máxima visibilidade */
+    will-change: transform;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Bolha 1: Verde, MAIOR, no canto superior */
+  .blob-1 {
+    background-color: hsl(var(--kick-green));
+    width: 500px;
+    height: 500px;
+    top: -150px;
+    left: -150px;
+    animation: move-blob-1 15s infinite alternate ease-in-out;
+  }
+
+  /* Bolha 2: Branco/Cinza, média, no canto inferior direito */
+  .blob-2 {
+    background-color: #ffffff;
+    width: 400px;
+    height: 400px;
+    bottom: -100px;
+    right: -100px;
+    animation: move-blob-2 18s infinite alternate ease-in-out;
+    animation-delay: -5s;
+  }
+
+  /* Bolha 3: Verde claro, mais ao centro */
+  .blob-3 {
+    background-color: hsl(var(--kick-green-light));
+    width: 350px;
+    height: 350px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: move-blob-3 20s infinite alternate ease-in-out;
+    animation-delay: -10s;
+  }
+
+  /* Bolha 4: Verde escuro, adicional para mais profundidade */
+  .blob-4 {
+    background-color: hsl(var(--kick-green-dark));
+    width: 450px;
+    height: 450px;
+    top: 20%;
+    right: 10%;
+    animation: move-blob-4 22s infinite alternate ease-in-out;
+    animation-delay: -7s;
+  }
+
+  /* Bolha 5: NOVA - Verde médio para preenchimento */
+  .blob-5 {
+    background-color: hsl(var(--kick-green));
+    width: 300px;
+    height: 300px;
+    top: 80%;
+    left: 20%;
+    animation: move-blob-5 25s infinite alternate ease-in-out;
+    animation-delay: -12s;
+  }
+
+  /* Interatividade sutil - as bolhas reagem ao hover */
+  body:hover .background-nebula-container .blob {
+    opacity: 0.35;
+    filter: blur(140px);
+    transition: all 0.8s ease;
+  }
+
+  /* Efeito especial ao interagir com elementos principais */
+  .hero-interaction:hover ~ * .background-nebula-container .blob {
+    opacity: 0.4;
+    filter: blur(130px);
+  }
+
+  /* Animações que movem as bolhas - MOVIMENTOS MAIS AMPLOS */
+  @keyframes move-blob-1 {
+    from {
+      transform: translate(0, 0) scale(1);
+    }
+    to {
+      transform: translate(150px, 80px) scale(1.3);
+    }
+  }
+
+  @keyframes move-blob-2 {
+    from {
+      transform: translate(0, 0) scale(1);
+    }
+    to {
+      transform: translate(-120px, -60px) scale(0.8);
+    }
+  }
+
+  @keyframes move-blob-3 {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
+    }
+  }
+
+  @keyframes move-blob-4 {
+    from {
+      transform: translate(0, 0) scale(0.8) rotate(0deg);
+    }
+    to {
+      transform: translate(-90px, 60px) scale(1.2) rotate(-120deg);
+    }
+  }
+
+  @keyframes move-blob-5 {
+    from {
+      transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+    to {
+      transform: translate(80px, -50px) scale(0.9) rotate(90deg);
+    }
+  }
+
+  /* Responsividade para as bolhas em mobile */
+  @media (max-width: 768px) {
+    .blob {
+      filter: blur(100px); /* Reduz blur em mobile para performance */
+      opacity: 0.35; /* Mantém a mesma opacidade do desktop */
+    }
+
+    .blob-1 {
+      width: 300px;
+      height: 300px;
+      top: -100px;
+      left: -100px;
+    }
+
+    .blob-2 {
+      width: 250px;
+      height: 250px;
+      bottom: -75px;
+      right: -75px;
+    }
+
+    .blob-3 {
+      width: 200px;
+      height: 200px;
+    }
+
+    .blob-4 {
+      width: 280px;
+      height: 280px;
+    }
+
+    .blob-5 {
+      width: 180px;
+      height: 180px;
+    }
+  }
+}
+
+/* Fix 3: Estilização da barra de scroll para navegadores WebKit (Chrome, Safari, etc.) */
+
+/* A barra de scroll inteira */
+::-webkit-scrollbar {
+  width: 8px; /* Largura da barra */
+}
+
+/* O "caminho" por onde a barra corre */
+::-webkit-scrollbar-track {
+  background: #111; /* Um cinza bem escuro, quase preto */
+}
+
+/* A alça de scroll (a parte que você arrasta) */
+::-webkit-scrollbar-thumb {
+  background-color: #34D399; /* O verde da Kick TV */
+  border-radius: 10px;      /* Bordas arredondadas */
+  border: 2px solid #111;   /* Uma pequena borda pra dar acabamento */
+}
+
+/* A alça de scroll quando você passa o mouse por cima */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #6EE7B7; /* Um verde um pouco mais claro no hover */
+}
+
+/* Suporte para Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #34D399 #111;
+}
